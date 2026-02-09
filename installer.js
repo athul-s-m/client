@@ -1,0 +1,84 @@
+const createFiles = (detailse, path) => {
+  const files = Object.keys(detailse);
+  if (files.length === 0) return;
+
+  files.forEach(async (file) => {
+    const filePath = `${path}/${file}`;
+    await Deno.writeTextFile(filePath, detailse[file]);
+  });
+};
+
+const createFolders = (detailse, path) => {
+  const files = Object.keys(detailse);
+  if (files.length === 0) return;
+
+  files.forEach((folder) => {
+    install({ [folder]: detailse[folder] }, path);
+  });
+};
+
+const remove = async (path) => {
+  try {
+    await Deno.remove(path, { recursive: true });
+  } catch {
+    //
+  }
+};
+
+const install = async (installationDetailsedetailse, parentPath) => {
+  const folderName = Object.keys(installationDetailsedetailse).at(0);
+  const path = `${parentPath}/${folderName}`;
+  await remove(path);
+
+  try {
+    await Deno.mkdir(path);
+  } catch {
+    //
+  }
+
+  await createFiles(installationDetailsedetailse[folderName].files, path);
+  await createFolders(installationDetailsedetailse[folderName].folders, path);
+};
+
+const green = (text) => `\x1b[32m${text}\x1b[0m`;
+const yellow = (text) => `\x1b[33m${text}\x1b[0m`;
+
+const getServerAddress = async () => {
+  const serverAddressUrl = await fetch(
+    "https://github.com/ibrahim-thoughtworks/chatroom/blob/main/ip.json",
+  );
+
+  const prefix = "http://";
+  const allInfo = await serverAddressUrl.text();
+
+  const regExOfSeverAddress = /"installationServer\\":\\"[^}]*/g;
+  const severAddressPart = allInfo.match(regExOfSeverAddress).join("");
+
+  const regExOfIpAddress = /\d[\d.:]*/g;
+  const ipAddress = severAddressPart.match(regExOfIpAddress).join("");
+
+  const serverAddress = prefix + ipAddress;
+  return serverAddress;
+};
+
+const printCompletedMessage = () => {
+  const space = " ".repeat(5);
+  console.clear();
+  console.log("\n\n\n");
+  console.log(green(space + "installation Done"));
+  console.log(yellow(space + "RUN : < deno task upgrade >"));
+  console.log("\n\n\n");
+};
+
+const main = async () => {
+  const server = await getServerAddress();
+  const response = await fetch(server, {
+    method: "POST",
+    body: JSON.stringify({ task: "install" }),
+  });
+
+  await install(await response.json(), ".");
+  printCompletedMessage();
+};
+
+main();
