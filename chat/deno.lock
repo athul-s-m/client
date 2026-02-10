@@ -1,11 +1,17 @@
 {
   "version": "5",
   "specifiers": {
+    "jsr:@std/assert@^1.0.17": "1.0.18",
     "jsr:@std/assert@^1.0.18": "1.0.18",
     "jsr:@std/collections@^1.1.5": "1.1.5",
+    "jsr:@std/data-structures@^1.0.10": "1.0.10",
+    "jsr:@std/fs@^1.0.22": "1.0.22",
     "jsr:@std/internal@^1.0.12": "1.0.12",
+    "jsr:@std/path@^1.1.4": "1.1.4",
+    "jsr:@std/testing@^1.0.17": "1.0.17",
     "npm:@inquirer/ansi@^2.0.3": "2.0.3",
-    "npm:@inquirer/prompts@^8.2.0": "8.2.0"
+    "npm:@inquirer/prompts@^8.2.0": "8.2.0",
+    "npm:@types/node@*": "24.2.0"
   },
   "jsr": {
     "@std/assert@1.0.18": {
@@ -17,8 +23,33 @@
     "@std/collections@1.1.5": {
       "integrity": "c37cc6bbbbf90fec3e782535a46c9c8a3210f19118c61add71fcea86b0ffd491"
     },
+    "@std/data-structures@1.0.10": {
+      "integrity": "f574f86b0e07c69b9edc555fcc814b57d29258bad39fd5a34ba8a80ecf033cfe"
+    },
+    "@std/fs@1.0.22": {
+      "integrity": "de0f277a58a867147a8a01bc1b181d0dfa80bfddba8c9cf2bacd6747bcec9308",
+      "dependencies": [
+        "jsr:@std/path"
+      ]
+    },
     "@std/internal@1.0.12": {
       "integrity": "972a634fd5bc34b242024402972cd5143eac68d8dffaca5eaa4dba30ce17b027"
+    },
+    "@std/path@1.1.4": {
+      "integrity": "1d2d43f39efb1b42f0b1882a25486647cb851481862dc7313390b2bb044314b5",
+      "dependencies": [
+        "jsr:@std/internal"
+      ]
+    },
+    "@std/testing@1.0.17": {
+      "integrity": "87bdc2700fa98249d48a17cd72413352d3d3680dcfbdb64947fd0982d6bbf681",
+      "dependencies": [
+        "jsr:@std/assert@^1.0.17",
+        "jsr:@std/data-structures",
+        "jsr:@std/fs",
+        "jsr:@std/internal",
+        "jsr:@std/path"
+      ]
     }
   },
   "npm": {
@@ -142,6 +173,12 @@
     "@inquirer/type@4.0.3": {
       "integrity": "sha512-cKZN7qcXOpj1h+1eTTcGDVLaBIHNMT1Rz9JqJP5MnEJ0JhgVWllx7H/tahUp5YEK1qaByH2Itb8wLG/iScD5kw=="
     },
+    "@types/node@24.2.0": {
+      "integrity": "sha512-3xyG3pMCq3oYCNg7/ZP+E1ooTaGB4cG8JWRsqqOYQdbWNY4zbaV0Ennrd7stjiJEFZCaybcIgpTjJWHRfBSIDw==",
+      "dependencies": [
+        "undici-types"
+      ]
+    },
     "ansi-regex@6.2.2": {
       "integrity": "sha512-Bq3SmSpyFHaWjPk8If9yc6svM8c56dB5BAtW4Qbw5jHTwwXXcTLoRMkpDJp6VL0XzlWaCHTXrkFURMYmD0sLqg=="
     },
@@ -189,6 +226,9 @@
         "ansi-regex"
       ]
     },
+    "undici-types@7.10.0": {
+      "integrity": "sha512-t5Fy/nfn+14LuOc2KNYg75vZqClpAiqscVvMygNnlsHBFpSXdJaYtXMcdNLpl/Qvc3P2cB3s6lOV51nqsFq4ag=="
+    },
     "wrap-ansi@9.0.2": {
       "integrity": "sha512-42AtmgqjV+X1VpdOfyTGOYRi0/zsoLqtXQckTmqTeybT+BDIbM/Guxo7x3pE2vtpr1ok6xRqM9OpBe+Jyoqyww==",
       "dependencies": [
@@ -202,6 +242,7 @@
     "dependencies": [
       "jsr:@std/assert@^1.0.18",
       "jsr:@std/collections@^1.1.5",
+      "jsr:@std/testing@^1.0.17",
       "npm:@inquirer/ansi@^2.0.3",
       "npm:@inquirer/prompts@^8.2.0"
     ]

@@ -1,6 +1,1 @@
-{"1":{"name":"Unknown","message":{"messages":["Hai","                         hello","                           hii","byee"],"isNew":false}},"userDetails":{"name":"v","id":2,"phoneNo":"1234567890"}}
-
-// id , name, send message, received message, is new, 
-
-message                       user                        profile
-contact_id|message|         id|name|phone|isNew       id|name|phone
+{"1":{"phoneNo":1233211232,"message":{"messages":["Good byee","                           hii","What man?","Hello","gf gfgh","tynhtnhy","sdfghjkl;"],"isNew":false}},"userDetails":{"name":"Athul","id":2,"phoneNo":"1234567890"}}

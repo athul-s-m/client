@@ -69,13 +69,14 @@ export class dataHandler {
   }
 
   getAllMyContacts() {
-    return Object.keys(this.#db).filter((id) => id !== "userDetails").map(
-      (id) => {
-        let name = this.#db[id].name || "unknown";
-        if (this.#db[id].message.isNew) name = green(name);
-        return [id, name];
-      },
-    );
+    // return Object.keys(this.#db).filter((id) => id !== "userDetails").map(
+    //   (id) => {
+    //     let name = this.#db[id].name || "unknown";
+    //     if (this.#db[id].message.isNew) name = green(name);
+    //     return [id, name];
+    //   },
+    // );
+    return this.#dbSqlite.prepare(`SELECT id, name FROM user;`).all();
   }
 
   createNewUser(id, name) {
@@ -89,16 +90,23 @@ export class dataHandler {
   }
 
   getUserName(id) {
-    return this.#db[id].name;
+    return this.#dbSqlite.prepare(`SELECT name FROM user WHERE id = ?;`).run(
+      id,
+    );
+    // return this.#db[id].name;
   }
 
   getMessage(id) {
-    return this.#db[id].message.messages;
+    return this.#dbSqlite.prepare(`SELECT message FROM message WHERE id = ?;`)
+      .run(id);
+    // return this.#db[id].message.messages;
   }
 
   saveName(id, name) {
-    this.#db[id].name = name;
-    this.saveDB();
+    this.#dbSqlite.prepare(`UPDATE user SET name = ? WHERE id = ?;`)
+      .run(name, id);
+    // this.#db[id].name = name;
+    // this.saveDB();
   }
 
   addMessage(id, message) {
@@ -106,8 +114,10 @@ export class dataHandler {
       message = [message];
     }
 
-    this.#db[id].message.messages.push(...message);
-    this.saveDB();
+    this.#dbSqlite.prepare(`INSERT INTO message (id, message) VALUES (?, ?);`)
+      .run(id, message);
+    // this.#db[id].message.messages.push(...message);
+    // this.saveDB();
   }
 
   isValidUser(id) {
@@ -121,8 +131,12 @@ export class dataHandler {
   }
 
   setPhoneNo(phoneNo) {
-    this.#db.userDetails.phoneNo = phoneNo;
-    this.saveDB();
+    this.#dbSqlite.prepare(`UPDATE user SET phone = ? WHERE id = ?;`).run(
+      phoneNo,
+      this.#id,
+    ); // what is
+    // this.#db.userDetails.phoneNo = phoneNo;
+    // this.saveDB();
   }
 
   setName(name) {

@@ -1,53 +1,10 @@
 const green = (text) => `\x1b[32m${text}\x1b[0m`;
-import { DatabaseSync } from "node:sqlite";
 
 export class dataHandler {
   #db;
-  #dbSqlite;
   #name;
   #id;
   #DBPath;
-
-  #initDb() {
-    const db = new DatabaseSync("chat.db");
-    this.#dbSqlite = db;
-  }
-
-  createTables() {
-    // id|name|phone|isNew|
-    const queryForCreateUser = `
-      CREATE TABLE IF NOT EXISTS user(
-        id INTEGER PRIMARY KEY,
-        name TEXT,
-        phone TEXT,
-        isNew BOOLEAN
-      );
-    `;
-
-    // contact_id|message|
-    const queryForCreateMessage = `
-      CREATE TABLE IF NOT EXISTS message(
-        contact_id INTEGER, 
-        message TEXT,
-        CONSTRAINT message_constraint
-        FOREIGN KEY (contact_id)
-        REFERENCES user(id)
-      );
-    `;
-
-    // id|name|phone
-    const queryForCreateProfile = `
-      CREATE TABLE IF NOT EXISTS user(
-        id INTEGER PRIMARY KEY,
-        name TEXT,
-        phone TEXT
-      );
-    `;
-
-    this.#dbSqlite.exec(queryForCreateUser);
-    this.#dbSqlite.exec(queryForCreateMessage);
-    this.#dbSqlite.exec(queryForCreateProfile);
-  }
 
   constructor(dbPath) {
     this.#DBPath = dbPath;
@@ -71,15 +28,18 @@ export class dataHandler {
   getAllMyContacts() {
     return Object.keys(this.#db).filter((id) => id !== "userDetails").map(
       (id) => {
-        let name = this.#db[id].name || "unknown";
+        let name = this.#db[id].name || this.#db[id].phoneNo;
         if (this.#db[id].message.isNew) name = green(name);
         return [id, name];
       },
     );
   }
 
-  createNewUser(id, name) {
-    this.#db[id] = { name, message: { messages: [], isNew: false } };
+  createNewUser(id, phoneNo) {
+    this.#db[id] = {
+      phoneNo,
+      message: { messages: [], isNew: false, name: undefined },
+    };
     this.saveDB();
   }
 

@@ -1,0 +1,59 @@
+{
+  "scriptId": "332",
+  "url": "file:///Users/ibrahimbadushakk/workspace/mine/chat_room/client/test/server_fns_test.js",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 1162, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 224, "endOffset": 1159, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 265, "endOffset": 774, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 470, "endOffset": 605, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 648, "endOffset": 768, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [
+        { "startOffset": 688, "endOffset": 760, "count": 1 },
+        { "startOffset": 752, "endOffset": 759, "count": 0 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 809, "endOffset": 1155, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 850, "endOffset": 1149, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "fakeFetch",
+      "ranges": [{ "startOffset": 897, "endOffset": 1034, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "json",
+      "ranges": [{ "startOffset": 963, "endOffset": 1014, "count": 1 }],
+      "isBlockCoverage": true
+    }
+  ]
+}

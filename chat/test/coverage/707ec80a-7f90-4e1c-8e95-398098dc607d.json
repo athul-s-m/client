@@ -1,0 +1,29 @@
+{
+  "scriptId": "335",
+  "url": "file:///Users/ibrahimbadushakk/workspace/mine/chat_room/client/src/server_fns.js",
+  "functions": [
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 0, "endOffset": 847, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "requestPhoneNo",
+      "ranges": [{ "startOffset": 69, "endOffset": 352, "count": 1 }],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "getServerAddress",
+      "ranges": [
+        { "startOffset": 387, "endOffset": 845, "count": 2 },
+        { "startOffset": 506, "endOffset": 844, "count": 1 }
+      ],
+      "isBlockCoverage": true
+    },
+    {
+      "functionName": "",
+      "ranges": [{ "startOffset": 737, "endOffset": 792, "count": 2 }],
+      "isBlockCoverage": true
+    }
+  ]
+}
