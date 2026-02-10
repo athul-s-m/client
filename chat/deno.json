@@ -1,8 +1,9 @@
 {
   "tasks": {"upgrade":{
-    "command": "dneo add npm:@inquirer/ansi",
+    "command": "echo 'upgrade done'",
     "dependencies": ["addPrompt","addCollections"]
   },
+  "addAnsi":"deno add npm:@inquirer/ansi",
   "addPrompt":"deno add npm:@inquirer/prompts",
   "addCollections":"deno add jsr:@std/collections"
 },

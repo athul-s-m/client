@@ -1,20 +1,35 @@
-const createFiles = (detailse, path) => {
-  const files = Object.keys(detailse);
-  if (files.length === 0) return;
+const encoder = new TextEncoder();
 
-  files.forEach(async (file) => {
-    const filePath = `${path}/${file}`;
-    await Deno.writeTextFile(filePath, detailse[file]);
-  });
+const showProgress = (value, char = " ") => {
+  const n = 100 / value;
+  let preveousN = 0;
+  let i = 0;
+
+  return () => {
+    const x = Math.round(n * ++i);
+    Deno.stdout.write(encoder.encode(char.repeat(x - preveousN)));
+    preveousN = x;
+  };
 };
 
-const createFolders = (detailse, path) => {
+const createFiles = async (detailse, path, progressShower = () => null) => {
   const files = Object.keys(detailse);
   if (files.length === 0) return;
 
-  files.forEach((folder) => {
-    install({ [folder]: detailse[folder] }, path);
-  });
+  for (const file of files) {
+    const filePath = `${path}/${file}`;
+    await Deno.writeTextFile(filePath, detailse[file]);
+    progressShower();
+  }
+};
+
+const createFolders = async (detailse, path, progressShower) => {
+  const files = Object.keys(detailse);
+  if (files.length === 0) return;
+
+  for (const folder of files) {
+    await install({ [folder]: detailse[folder] }, path, progressShower);
+  }
 };
 
 const remove = async (path) => {
@@ -25,19 +40,21 @@ const remove = async (path) => {
   }
 };
 
-const install = async (installationDetailsedetailse, parentPath) => {
-  const folderName = Object.keys(installationDetailsedetailse).at(0);
-  const path = `${parentPath}/${folderName}`;
+const install = async (filesToCreate, parentPath, progressShower) => {
+  const dirName = Object.keys(filesToCreate).at(0);
+  const path = `${parentPath}/${dirName}`;
   await remove(path);
 
   try {
     await Deno.mkdir(path);
+    // console.log(".".repeat(100 / noOfFiles));
   } catch {
     //
   }
+  progressShower();
 
-  await createFiles(installationDetailsedetailse[folderName].files, path);
-  await createFolders(installationDetailsedetailse[folderName].folders, path);
+  await createFiles(filesToCreate[dirName].files, path, progressShower);
+  await createFolders(filesToCreate[dirName].folders, path, progressShower);
 };
 
 const green = (text) => `\x1b[32m${text}\x1b[0m`;
@@ -63,10 +80,10 @@ const getServerAddress = async () => {
 
 const printCompletedMessage = () => {
   const space = " ".repeat(5);
-  console.clear();
+  console.log(" 100%");
   console.log("\n\n\n");
   console.log(green(space + "installation Done"));
-  console.log(yellow(space + "RUN : < deno task upgrade >"));
+  console.log(yellow(space + "RUN : source upgrade >"));
   console.log("\n\n\n");
 };
 
@@ -77,7 +94,19 @@ const main = async () => {
     body: JSON.stringify({ task: "install" }),
   });
 
-  await install(await response.json(), ".");
+  const installationDetails = await response.json();
+
+  console.log(installationDetails);
+
+  const noOfFiles = installationDetails["//"].at(-1);
+  const routFiles = installationDetails["../"];
+  delete installationDetails["//"];
+
+  console.clear();
+
+  const progressShower = showProgress(noOfFiles, "x");
+  await install(installationDetails, ".", progressShower);
+  if (routFiles) await createFiles(routFiles, "./");
   printCompletedMessage();
 };
 

@@ -27,9 +27,7 @@ const displayTexts = (texts = "", cursorY) => {
   });
 };
 
-const handleTextDisplay = (
-  pager,
-) => {
+const handleTextDisplay = (pager) => {
   const textToDisplay = pager.texts.slice();
 
   textToDisplay[pager.selectionIndex] = green(
